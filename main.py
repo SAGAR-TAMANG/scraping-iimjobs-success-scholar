@@ -652,64 +652,65 @@ def bpo():
   time.sleep(0.5)
   driver.close()
 
-thread1 = threading.Thread(target=banking_finance)
-thread2 = threading.Thread(target=sales_marketing)
-thread3 = threading.Thread(target=consulting)
-thread4 = threading.Thread(target=hr_it)
-thread5 = threading.Thread(target=it_systems)
-thread6 = threading.Thread(target=scm_operations)
-thread7 = threading.Thread(target=legal)
-thread8 = threading.Thread(target=bpo)
+def main():
+  thread1 = threading.Thread(target=banking_finance)
+  thread2 = threading.Thread(target=sales_marketing)
+  thread3 = threading.Thread(target=consulting)
+  thread4 = threading.Thread(target=hr_it)
+  thread5 = threading.Thread(target=it_systems)
+  thread6 = threading.Thread(target=scm_operations)
+  thread7 = threading.Thread(target=legal)
+  thread8 = threading.Thread(target=bpo)
 
-# Start Button Here:
+  # Start Button Here:
 
-thread1.start()
-thread2.start()
+  thread1.start()
+  thread2.start()
 
-print("OPERATIONS UNDERWAY!")
+  print("OPERATIONS UNDERWAY!")
 
-thread1.join()
-thread2.join()
+  thread1.join()
+  thread2.join()
 
-print("FIRST PHASE COMPLETED!")
+  print("FIRST PHASE COMPLETED!")
 
-thread3.start()
-thread4.start()
+  thread3.start()
+  thread4.start()
 
-thread3.join()
-thread4.join()
+  thread3.join()
+  thread4.join()
 
-thread5.start()
-thread6.start()
+  thread5.start()
+  thread6.start()
 
-thread5.join()
-thread6.join()
+  thread5.join()
+  thread6.join()
 
-thread7.start()
-thread8.start()
+  thread7.start()
+  thread8.start()
 
-thread7.join()
-thread8.join()
+  thread7.join()
+  thread8.join()
 
-print("ALL THE DATA HAS BEEN FETCHED - NOW INTEGRATION HAS BEGUN \n *****PLEASE WAIT*****")
+  print("ALL THE DATA HAS BEEN FETCHED - NOW INTEGRATION HAS BEGUN \n *****PLEASE WAIT*****")
 
-dff101 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  dff101 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
 
-dff101 = pd.concat([dff101, dff1], ignore_index=True)
-dff101 = pd.concat([dff101, dff2], ignore_index=True)
-dff101 = pd.concat([dff101, dff3], ignore_index=True)
-dff101 = pd.concat([dff101, dff4], ignore_index=True)
-dff101 = pd.concat([dff101, dff5], ignore_index=True)
-dff101 = pd.concat([dff101, dff6], ignore_index=True)
-dff101 = pd.concat([dff101, dff7], ignore_index=True)
-dff101 = pd.concat([dff101, dff8], ignore_index=True)
+  dff101 = pd.concat([dff101, dff1], ignore_index=True)
+  dff101 = pd.concat([dff101, dff2], ignore_index=True)
+  dff101 = pd.concat([dff101, dff3], ignore_index=True)
+  dff101 = pd.concat([dff101, dff4], ignore_index=True)
+  dff101 = pd.concat([dff101, dff5], ignore_index=True)
+  dff101 = pd.concat([dff101, dff6], ignore_index=True)
+  dff101 = pd.concat([dff101, dff7], ignore_index=True)
+  dff101 = pd.concat([dff101, dff8], ignore_index=True)
 
-print('THE FINAL DATA IS READY')
+  print('THE FINAL DATA IS READY')
 
-dff101.to_excel("IIMJobsJobListing_"+ str(datetime.date.today()) + ".xlsx", index = False)
+  dff101.to_excel("IIMJobsJobListing_"+ str(datetime.date.today()) + ".xlsx", index = False)
 
 
-
+main()
 
 # banking_finance = "https://www.iimjobs.com/c/filter/banking-finance-jobs-in-metros_anywhere%20in%20india_ahmedabad_amritsar_andhra%20pradesh_aurangabad_bangalore_bhubaneshwar_bihar_chandigarh_chennai_chhattisgarh_cochin-kochi_coimbatore_cuttack_dehradun_delhi_delhi%20ncr_faridabad_gandhinagar_ghaziabad_goa_greater%20noida_gujarat_guntur_gurgaon-gurugram_guwahati_haridwar_haryana_hosur_hubli_hyderabad_jaipur_jalandhar_jammu_jammu%20&%20kashmir_jamshedpur_jharkhand_jodhpur_karnataka_kerala_kolkata_lucknow_ludhiana_madurai_maharashtra_mp_mumbai_mysore_nagpur_nasik_navi%20mumbai_noida_odisha_panipat_patiala_patna_pondicherry_pune_punjab_raipur_rajasthan_rajkot_ranchi_sonipat_srinagar_surat_tamil%20nadu_telangana_thane_thiruvananthapuram_udaipur_up_uttarakhand_vadodara-baroda_varanasi-banaras_vijayawada_vishakhapatnam-vizag_warangal-13-87_88_53_45_34_79_3_65_19_14_6_64_70_84_86_58_36_1_40_55_41_13_39_8_77_37_12_57_16_71_72_4_11_46_43_42_63_20_52_31_17_5_60_48_83_9_10_2_73_66_67_68_38_18_50_47_61_85_7_15_74_33_80_62_49_44_54_32_35_69_75_51_21_59_56_81_76_78_82-0-0-1.html"
 
