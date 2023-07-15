@@ -79,7 +79,7 @@ def banking_finance():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff1 = pd.concat([dff1, pd.DataFrame([[Title, Exp, City, Date, Site, URL, ]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff1 = pd.concat([dff1, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
       # dff1.to_excel("IIMJobsJobListing_BANKING_FINANCE"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff1)
     else:
@@ -160,7 +160,7 @@ def sales_marketing():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff2 = pd.concat([dff2, pd.DataFrame([[Title, Exp, City, Date, Site, URL, ]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff2 = pd.concat([dff2, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
       # dff2.to_excel("IIMJobsJobListing_SALES_MARKETING_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff2)
     else:
@@ -241,7 +241,7 @@ def consulting():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff3 = pd.concat([dff3, pd.DataFrame([[Title, Exp, City, Date, Site, URL, ]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff3 = pd.concat([dff3, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
       # dff3.to_excel("IIMJobsJobListing_consulting_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff3)
     else:
@@ -322,7 +322,7 @@ def hr_it():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff4 = pd.concat([dff4, pd.DataFrame([[Title, Exp, City, Date, Site, URL, ]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff4 = pd.concat([dff4, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
       # dff4.to_excel("IIMJobsJobListing_hr_it_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff4)
     else:
@@ -403,7 +403,7 @@ def it_systems():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff5 = pd.concat([dff5, pd.DataFrame([[Title, Exp, City, Date, Site, URL, ]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff5 = pd.concat([dff5, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
       # dff5.to_excel("IIMJobsJobListing_it_systems_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff5)
     else:
@@ -483,7 +483,7 @@ def scm_operations():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff6 = pd.concat([dff6, pd.DataFrame([[Title, Exp, City, Date, Site, URL, ]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff6 = pd.concat([dff6, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
       # dff6.to_excel("IIMJobsJobListing_scm_operations_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff6)
     else:
@@ -563,7 +563,7 @@ def legal():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff7 = pd.concat([dff7, pd.DataFrame([[Title, Exp, City, Date, Site, URL, ]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff7 = pd.concat([dff7, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
       # dff7.to_excel("IIMJobsJobListing_legal_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff7)
     else:
@@ -643,7 +643,7 @@ def bpo():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff8 = pd.concat([dff8, pd.DataFrame([[Title, Exp, City, Date, Site, URL, ]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff8 = pd.concat([dff8, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
       # dff8.to_excel("IIMJobsJobListing_bpo_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff8)
     else:
