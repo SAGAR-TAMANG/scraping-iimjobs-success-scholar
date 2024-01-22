@@ -1,19 +1,35 @@
-from selenium import webdriver
-from bs4 import BeautifulSoup
 import time
 import datetime
+import threading
+import os
+
 import pandas as pd
 import numpy as np
+
 from selenium.webdriver.common.by import By
-import threading
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium import webdriver
+from bs4 import BeautifulSoup
+
+CHROMEDRIVER_PATH = r'C:\Program Files\chromedriver_win32\chromedriver.exe'
+WINDOW_SIZE = "1920,1080"
+
+service = Service(CHROMEDRIVER_PATH)
+
+chrome_options = Options()
+# chrome_options.add_argument("--headless")
+chrome_options.binary_location = r"C:\Users\TAMANG\Downloads\chrome-win64 (2)\chrome-win64\chrome.exe"
+chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
+chrome_options.add_argument('--no-sandbox')
 
 def banking_finance():
   global dff1
 
-  dff1 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  dff1 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])
 
   banking_finance = 'https://www.iimjobs.com/c/filter/banking-finance-jobs-in-metros_anywhere%20in%20india_ahmedabad_amritsar_andhra%20pradesh_aurangabad_bangalore_bhubaneshwar_bihar_chandigarh_chennai_chhattisgarh_cochin-kochi_coimbatore_cuttack_dehradun_delhi_delhi%20ncr_faridabad_gandhinagar_ghaziabad_goa_greater%20noida_gujarat_guntur_gurgaon-gurugram_guwahati_haridwar_haryana_hosur_hubli_hyderabad_jaipur_jalandhar_jammu_jammu%20&%20kashmir_jamshedpur_jharkhand_jodhpur_karnataka_kerala_kolkata_lucknow_ludhiana_madurai_maharashtra_mp_mumbai_mysore_nagpur_nasik_navi%20mumbai_noida_odisha_panipat_patiala_patna_pondicherry_pune_punjab_raipur_rajasthan_rajkot_ranchi_sonipat_srinagar_surat_tamil%20nadu_telangana_thane_thiruvananthapuram_udaipur_up_uttarakhand_vadodara-baroda_varanasi-banaras_vijayawada_vishakhapatnam-vizag_warangal-13-87_88_53_45_34_79_3_65_19_14_6_64_70_84_86_58_36_1_40_55_41_13_39_8_77_37_12_57_16_71_72_4_11_46_43_42_63_20_52_31_17_5_60_48_83_9_10_2_73_66_67_68_38_18_50_47_61_85_7_15_74_33_80_62_49_44_54_32_35_69_75_51_21_59_56_81_76_78_82-0-0-1.html'
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome(service = service, options = chrome_options)
   driver.get(banking_finance)
 
   scroll = np.arange(1, 20)
@@ -47,11 +63,6 @@ def banking_finance():
         # Experience
         Exp = E
         # print(Exp)
-        
-        # Site
-        S = 'iimjobs.com'
-        Site = S
-        # print(Site)
 
         # URL
         U = job_elem1.find('a',class_='mrmob5 hidden-xs').get('href')
@@ -71,7 +82,7 @@ def banking_finance():
         # City
         try:
           C = job_elem1.find('span')
-          City=C.text
+          City=C.text.strip()
           print(City)
         except Exception as e:
           City = None
@@ -79,7 +90,7 @@ def banking_finance():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff1 = pd.concat([dff1, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff1 = pd.concat([dff1, pd.DataFrame([[Title, Exp, City, Date, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])], ignore_index=True)
       # dff1.to_excel("IIMJobsJobListing_BANKING_FINANCE"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff1)
     else:
@@ -91,10 +102,10 @@ def banking_finance():
 def sales_marketing():
   global dff2
 
-  dff2 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  dff2 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])
 
   sales_marketing = "https://www.iimjobs.com/c/filter/sales-marketing-jobs-in-metros_anywhere%20in%20india_ahmedabad_amritsar_andhra%20pradesh_aurangabad_bangalore_bhubaneshwar_bihar_chandigarh_chennai_chhattisgarh_cochin-kochi_coimbatore_cuttack_dehradun_delhi_delhi%20ncr_faridabad_gandhinagar_ghaziabad_goa_greater%20noida_gujarat_guntur_gurgaon-gurugram_guwahati_haridwar_haryana_hosur_hubli_hyderabad_jaipur_jalandhar_jammu_jammu%20&%20kashmir_jamshedpur_jharkhand_jodhpur_karnataka_kerala_kolkata_lucknow_ludhiana_madurai_maharashtra_mp_mumbai_mysore_nagpur_nasik_navi%20mumbai_noida_odisha_panipat_patiala_patna_pondicherry_pune_punjab_raipur_rajasthan_rajkot_ranchi_sonipat_srinagar_surat_tamil%20nadu_telangana_thane_thiruvananthapuram_udaipur_up_uttarakhand_vadodara-baroda_varanasi-banaras_vijayawada_vishakhapatnam-vizag_warangal-14-87_88_53_45_34_79_3_65_19_14_6_64_70_84_86_58_36_1_40_55_41_13_39_8_77_37_12_57_16_71_72_4_11_46_43_42_63_20_52_31_17_5_60_48_83_9_10_2_73_66_67_68_38_18_50_47_61_85_7_15_74_33_80_62_49_44_54_32_35_69_75_51_21_59_56_81_76_78_82-0-0-1.html"
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome(service = service, options = chrome_options)
   driver.get(sales_marketing)
 
   scroll = np.arange(1, 20)
@@ -128,11 +139,6 @@ def sales_marketing():
         # Experience
         Exp = E
         # print(Exp)
-        
-        # Site
-        S = 'iimjobs.com'
-        Site = S
-        # print(Site)
 
         # URL
         U = job_elem2.find('a',class_='mrmob5 hidden-xs').get('href')
@@ -152,7 +158,7 @@ def sales_marketing():
         # City
         try:
           C = job_elem2.find('span')
-          City=C.text
+          City=C.text.strip()
           print(City)
         except Exception as e:
           City = None
@@ -160,7 +166,7 @@ def sales_marketing():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff2 = pd.concat([dff2, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff2 = pd.concat([dff2, pd.DataFrame([[Title, Exp, City, Date, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted' , 'URL'])], ignore_index=True)
       # dff2.to_excel("IIMJobsJobListing_SALES_MARKETING_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff2)
     else:
@@ -172,10 +178,10 @@ def sales_marketing():
 def consulting():
   global dff3
 
-  dff3 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  dff3 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted' , 'URL'])
 
   consulting = "https://www.iimjobs.com/c/filter/sales-marketing-jobs-in-metros_anywhere%20in%20india_ahmedabad_amritsar_andhra%20pradesh_aurangabad_bangalore_bhubaneshwar_bihar_chandigarh_chennai_chhattisgarh_cochin-kochi_coimbatore_cuttack_dehradun_delhi_delhi%20ncr_faridabad_gandhinagar_ghaziabad_goa_greater%20noida_gujarat_guntur_gurgaon-gurugram_guwahati_haridwar_haryana_hosur_hubli_hyderabad_jaipur_jalandhar_jammu_jammu%20&%20kashmir_jamshedpur_jharkhand_jodhpur_karnataka_kerala_kolkata_lucknow_ludhiana_madurai_maharashtra_mp_mumbai_mysore_nagpur_nasik_navi%20mumbai_noida_odisha_panipat_patiala_patna_pondicherry_pune_punjab_raipur_rajasthan_rajkot_ranchi_sonipat_srinagar_surat_tamil%20nadu_telangana_thane_thiruvananthapuram_udaipur_up_uttarakhand_vadodara-baroda_varanasi-banaras_vijayawada_vishakhapatnam-vizag_warangal-14-87_88_53_45_34_79_3_65_19_14_6_64_70_84_86_58_36_1_40_55_41_13_39_8_77_37_12_57_16_71_72_4_11_46_43_42_63_20_52_31_17_5_60_48_83_9_10_2_73_66_67_68_38_18_50_47_61_85_7_15_74_33_80_62_49_44_54_32_35_69_75_51_21_59_56_81_76_78_82-0-0-1.html"
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome(service = service, options = chrome_options)
   driver.get(consulting)
 
   scroll = np.arange(1, 20)
@@ -210,11 +216,6 @@ def consulting():
         Exp = E
         # print(Exp)
         
-        # Site
-        S = 'iimjobs.com'
-        Site = S
-        # print(Site)
-
         # URL
         U = job_elem3.find('a',class_='mrmob5 hidden-xs').get('href')
         URL = U
@@ -233,7 +234,7 @@ def consulting():
         # City
         try:
           C = job_elem3.find('span')
-          City=C.text
+          City=C.text.strip()
           print(City)
         except Exception as e:
           City = None
@@ -241,7 +242,7 @@ def consulting():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff3 = pd.concat([dff3, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff3 = pd.concat([dff3, pd.DataFrame([[Title, Exp, City, Date, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])], ignore_index=True)
       # dff3.to_excel("IIMJobsJobListing_consulting_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff3)
     else:
@@ -253,10 +254,10 @@ def consulting():
 def hr_it():
   global dff4
 
-  dff4 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  dff4 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])
 
   hr_it = "https://www.iimjobs.com/c/filter/hr-ir-jobs-in-metros_anywhere%20in%20india_ahmedabad_amritsar_andhra%20pradesh_aurangabad_bangalore_bhubaneshwar_bihar_chandigarh_chennai_chhattisgarh_cochin-kochi_coimbatore_cuttack_dehradun_delhi_delhi%20ncr_faridabad_gandhinagar_ghaziabad_goa_greater%20noida_gujarat_guntur_gurgaon-gurugram_guwahati_haridwar_haryana_hosur_hubli_hyderabad_jaipur_jalandhar_jammu_jammu%20&%20kashmir_jamshedpur_jharkhand_jodhpur_karnataka_kerala_kolkata_lucknow_ludhiana_madurai_maharashtra_mp_mumbai_mysore_nagpur_nasik_navi%20mumbai_noida_odisha_panipat_patiala_patna_pondicherry_pune_punjab_raipur_rajasthan_rajkot_ranchi_sonipat_srinagar_surat_tamil%20nadu_telangana_thane_thiruvananthapuram_udaipur_up_uttarakhand_vadodara-baroda_varanasi-banaras_vijayawada_vishakhapatnam-vizag_warangal-17-87_88_53_45_34_79_3_65_19_14_6_64_70_84_86_58_36_1_40_55_41_13_39_8_77_37_12_57_16_71_72_4_11_46_43_42_63_20_52_31_17_5_60_48_83_9_10_2_73_66_67_68_38_18_50_47_61_85_7_15_74_33_80_62_49_44_54_32_35_69_75_51_21_59_56_81_76_78_82-0-0-1.html"
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome(service = service, options = chrome_options)
   driver.get(hr_it)
 
   scroll = np.arange(1, 20)
@@ -290,11 +291,6 @@ def hr_it():
         # Experience
         Exp = E
         # print(Exp)
-        
-        # Site
-        S = 'iimjobs.com'
-        Site = S
-        # print(Site)
 
         # URL
         U = job_elem4.find('a',class_='mrmob5 hidden-xs').get('href')
@@ -314,7 +310,7 @@ def hr_it():
         # City
         try:
           C = job_elem4.find('span')
-          City=C.text
+          City=C.text.strip()
           print(City)
         except Exception as e:
           City = None
@@ -322,7 +318,7 @@ def hr_it():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff4 = pd.concat([dff4, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff4 = pd.concat([dff4, pd.DataFrame([[Title, Exp, City, Date, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])], ignore_index=True)
       # dff4.to_excel("IIMJobsJobListing_hr_it_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff4)
     else:
@@ -334,10 +330,10 @@ def hr_it():
 def it_systems():
   global dff5
 
-  dff5 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  dff5 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])
 
   hr_it = "https://www.iimjobs.com/c/filter/it-systems-jobs-in-metros_anywhere%20in%20india_ahmedabad_amritsar_andhra%20pradesh_aurangabad_bangalore_bhubaneshwar_bihar_chandigarh_chennai_chhattisgarh_cochin-kochi_coimbatore_cuttack_dehradun_delhi_delhi%20ncr_faridabad_gandhinagar_ghaziabad_goa_greater%20noida_gujarat_guntur_gurgaon-gurugram_guwahati_haridwar_haryana_hosur_hubli_hyderabad_jaipur_jalandhar_jammu_jammu%20&%20kashmir_jamshedpur_jharkhand_jodhpur_karnataka_kerala_kolkata_lucknow_ludhiana_madurai_maharashtra_mp_mumbai_mysore_nagpur_nasik_navi%20mumbai_noida_odisha_panipat_patiala_patna_pondicherry_pune_punjab_raipur_rajasthan_rajkot_ranchi_sonipat_srinagar_surat_tamil%20nadu_telangana_thane_thiruvananthapuram_udaipur_up_uttarakhand_vadodara-baroda_varanasi-banaras_vijayawada_vishakhapatnam-vizag_warangal-15-87_88_53_45_34_79_3_65_19_14_6_64_70_84_86_58_36_1_40_55_41_13_39_8_77_37_12_57_16_71_72_4_11_46_43_42_63_20_52_31_17_5_60_48_83_9_10_2_73_66_67_68_38_18_50_47_61_85_7_15_74_33_80_62_49_44_54_32_35_69_75_51_21_59_56_81_76_78_82-0-0-1.html"
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome(service = service, options = chrome_options)
   driver.get(hr_it)
 
   scroll = np.arange(1, 20)
@@ -371,11 +367,6 @@ def it_systems():
         # Experience
         Exp = E
         # print(Exp)
-        
-        # Site
-        S = 'iimjobs.com'
-        Site = S
-        # print(Site)
 
         # URL
         U = job_elem5.find('a',class_='mrmob5 hidden-xs').get('href')
@@ -395,7 +386,7 @@ def it_systems():
         # City
         try:
           C = job_elem5.find('span')
-          City=C.text
+          City=C.text.strip()
           print(City)
         except Exception as e:
           City = None
@@ -403,7 +394,7 @@ def it_systems():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff5 = pd.concat([dff5, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff5 = pd.concat([dff5, pd.DataFrame([[Title, Exp, City, Date, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])], ignore_index=True)
       # dff5.to_excel("IIMJobsJobListing_it_systems_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff5)
     else:
@@ -415,10 +406,10 @@ def it_systems():
 def scm_operations():
   global dff6
 
-  dff6 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  dff6 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])
 
   scm_operations = "https://www.iimjobs.com/c/filter/scm-operations-jobs-in-metros_anywhere%20in%20india_ahmedabad_amritsar_andhra%20pradesh_aurangabad_bangalore_bhubaneshwar_bihar_chandigarh_chennai_chhattisgarh_cochin-kochi_coimbatore_cuttack_dehradun_delhi_delhi%20ncr_faridabad_gandhinagar_ghaziabad_goa_greater%20noida_gujarat_guntur_gurgaon-gurugram_guwahati_haridwar_haryana_hosur_hubli_hyderabad_jaipur_jalandhar_jammu_jammu%20&%20kashmir_jamshedpur_jharkhand_jodhpur_karnataka_kerala_kolkata_lucknow_ludhiana_madurai_maharashtra_mp_mumbai_mysore_nagpur_nasik_navi%20mumbai_noida_odisha_panipat_patiala_patna_pondicherry_pune_punjab_raipur_rajasthan_rajkot_ranchi_sonipat_srinagar_surat_tamil%20nadu_telangana_thane_thiruvananthapuram_udaipur_up_uttarakhand_vadodara-baroda_varanasi-banaras_vijayawada_vishakhapatnam-vizag_warangal-19-87_88_53_45_34_79_3_65_19_14_6_64_70_84_86_58_36_1_40_55_41_13_39_8_77_37_12_57_16_71_72_4_11_46_43_42_63_20_52_31_17_5_60_48_83_9_10_2_73_66_67_68_38_18_50_47_61_85_7_15_74_33_80_62_49_44_54_32_35_69_75_51_21_59_56_81_76_78_82-0-0-1.html"
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome(service = service, options = chrome_options)
   driver.get(scm_operations)
   scroll = np.arange(1, 20)
   counter = 0
@@ -451,11 +442,6 @@ def scm_operations():
         # Experience
         Exp = E
         # print(Exp)
-        
-        # Site
-        S = 'iimjobs.com'
-        Site = S
-        # print(Site)
 
         # URL
         U = job_elem6.find('a',class_='mrmob5 hidden-xs').get('href')
@@ -475,7 +461,7 @@ def scm_operations():
         # City
         try:
           C = job_elem6.find('span')
-          City=C.text
+          City=C.text.strip()
           print(City)
         except Exception as e:
           City = None
@@ -483,7 +469,7 @@ def scm_operations():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff6 = pd.concat([dff6, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff6 = pd.concat([dff6, pd.DataFrame([[Title, Exp, City, Date, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])], ignore_index=True)
       # dff6.to_excel("IIMJobsJobListing_scm_operations_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff6)
     else:
@@ -495,10 +481,10 @@ def scm_operations():
 def legal():
   global dff7
 
-  dff7 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  dff7 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])
 
   legal = "https://www.iimjobs.com/c/filter/legal-jobs-in-metros_anywhere%20in%20india_ahmedabad_amritsar_andhra%20pradesh_aurangabad_bangalore_bhubaneshwar_bihar_chandigarh_chennai_chhattisgarh_cochin-kochi_coimbatore_cuttack_dehradun_delhi_delhi%20ncr_faridabad_gandhinagar_ghaziabad_goa_greater%20noida_gujarat_guntur_gurgaon-gurugram_guwahati_haridwar_haryana_hosur_hubli_hyderabad_jaipur_jalandhar_jammu_jammu%20&%20kashmir_jamshedpur_jharkhand_jodhpur_karnataka_kerala_kolkata_lucknow_ludhiana_madurai_maharashtra_mp_mumbai_mysore_nagpur_nasik_navi%20mumbai_noida_odisha_panipat_patiala_patna_pondicherry_pune_punjab_raipur_rajasthan_rajkot_ranchi_sonipat_srinagar_surat_tamil%20nadu_telangana_thane_thiruvananthapuram_udaipur_up_uttarakhand_vadodara-baroda_varanasi-banaras_vijayawada_vishakhapatnam-vizag_warangal-21-87_88_53_45_34_79_3_65_19_14_6_64_70_84_86_58_36_1_40_55_41_13_39_8_77_37_12_57_16_71_72_4_11_46_43_42_63_20_52_31_17_5_60_48_83_9_10_2_73_66_67_68_38_18_50_47_61_85_7_15_74_33_80_62_49_44_54_32_35_69_75_51_21_59_56_81_76_78_82-0-0-1.html"
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome(service = service, options = chrome_options)
   driver.get(legal)
   scroll = np.arange(1, 20)
   counter = 0
@@ -531,11 +517,7 @@ def legal():
         # Experience
         Exp = E
         # print(Exp)
-        
-        # Site
-        S = 'iimjobs.com'
-        Site = S
-        # print(Site)
+
 
         # URL
         U = job_elem7.find('a',class_='mrmob5 hidden-xs').get('href')
@@ -555,7 +537,7 @@ def legal():
         # City
         try:
           C = job_elem7.find('span')
-          City=C.text
+          City=C.text.strip()
           print(City)
         except Exception as e:
           City = None
@@ -563,7 +545,7 @@ def legal():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff7 = pd.concat([dff7, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff7 = pd.concat([dff7, pd.DataFrame([[Title, Exp, City, Date, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])], ignore_index=True)
       # dff7.to_excel("IIMJobsJobListing_legal_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff7)
     else:
@@ -575,10 +557,10 @@ def legal():
 def bpo():
   global dff8
 
-  dff8 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  dff8 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])
 
   bpo = "https://www.iimjobs.com/c/filter/bpo-jobs-in-metros_anywhere%20in%20india_ahmedabad_amritsar_andhra%20pradesh_aurangabad_bangalore_bhubaneshwar_bihar_chandigarh_chennai_chhattisgarh_cochin-kochi_coimbatore_cuttack_dehradun_delhi_delhi%20ncr_faridabad_gandhinagar_ghaziabad_goa_greater%20noida_gujarat_guntur_gurgaon-gurugram_guwahati_haridwar_haryana_hosur_hubli_hyderabad_jaipur_jalandhar_jammu_jammu%20&%20kashmir_jamshedpur_jharkhand_jodhpur_karnataka_kerala_kolkata_lucknow_ludhiana_madurai_maharashtra_mp_mumbai_mysore_nagpur_nasik_navi%20mumbai_noida_odisha_panipat_patiala_patna_pondicherry_pune_punjab_raipur_rajasthan_rajkot_ranchi_sonipat_srinagar_surat_tamil%20nadu_telangana_thane_thiruvananthapuram_udaipur_up_uttarakhand_vadodara-baroda_varanasi-banaras_vijayawada_vishakhapatnam-vizag_warangal-22-87_88_53_45_34_79_3_65_19_14_6_64_70_84_86_58_36_1_40_55_41_13_39_8_77_37_12_57_16_71_72_4_11_46_43_42_63_20_52_31_17_5_60_48_83_9_10_2_73_66_67_68_38_18_50_47_61_85_7_15_74_33_80_62_49_44_54_32_35_69_75_51_21_59_56_81_76_78_82-0-0-1.html"
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome(service = service, options = chrome_options)
   driver.get(bpo)
   scroll = np.arange(1, 20)
   counter = 0
@@ -611,11 +593,6 @@ def bpo():
         # Experience
         Exp = E
         # print(Exp)
-        
-        # Site
-        S = 'iimjobs.com'
-        Site = S
-        # print(Site)
 
         # URL
         U = job_elem8.find('a',class_='mrmob5 hidden-xs').get('href')
@@ -635,7 +612,7 @@ def bpo():
         # City
         try:
           C = job_elem8.find('span')
-          City=C.text
+          City=C.text.strip()
           print(City)
         except Exception as e:
           City = None
@@ -643,7 +620,7 @@ def bpo():
         print("EXCEPTION OCCURRED | COUNTER = " + str(counter))
         pass
     if finding == 1:
-      dff8 = pd.concat([dff8, pd.DataFrame([[Title, Exp, City, Date, Site, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])], ignore_index=True)
+      dff8 = pd.concat([dff8, pd.DataFrame([[Title, Exp, City, Date, URL]], columns = ['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])], ignore_index=True)
       # dff8.to_excel("IIMJobsJobListing_bpo_"+ str(datetime.date.today()) + ".xlsx", index = False)
       print(dff8)
     else:
@@ -653,6 +630,8 @@ def bpo():
   driver.close()
 
 def main():
+  dff101 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'URL'])
+
   thread1 = threading.Thread(target=banking_finance)
   thread2 = threading.Thread(target=sales_marketing)
   thread3 = threading.Thread(target=consulting)
@@ -694,20 +673,42 @@ def main():
 
   print("ALL THE DATA HAS BEEN FETCHED - NOW INTEGRATION HAS BEGUN \n *****PLEASE WAIT*****")
 
-  dff101 = pd.DataFrame(columns=['Job Title', 'Experience Reqd', 'City', 'Date Posted', 'Site', 'URL'])
+  try: 
+    dff101 = pd.concat([dff101, dff1], ignore_index=True)
+  except Exception as e:
+    pass
+  try:
+    dff101 = pd.concat([dff101, dff2], ignore_index=True)
+  except Exception as e:
+    pass
+  try:
+    dff101 = pd.concat([dff101, dff3], ignore_index=True)
+  except Exception as e:
+    pass
+  try:
+    dff101 = pd.concat([dff101, dff4], ignore_index=True)
+  except Exception as e:
+    pass
+  try:
+    dff101 = pd.concat([dff101, dff5], ignore_index=True)
+  except Exception as e:
+    pass
+  try:
+    dff101 = pd.concat([dff101, dff6], ignore_index=True)
+  except Exception as e:
+    pass
+  try:
+    dff101 = pd.concat([dff101, dff7], ignore_index=True)
+  except Exception as e:
+    pass
+  try:
+    dff101 = pd.concat([dff101, dff8], ignore_index=True)
+  except Exception as e:
+    pass
 
-  dff101 = pd.concat([dff101, dff1], ignore_index=True)
-  dff101 = pd.concat([dff101, dff2], ignore_index=True)
-  dff101 = pd.concat([dff101, dff3], ignore_index=True)
-  dff101 = pd.concat([dff101, dff4], ignore_index=True)
-  dff101 = pd.concat([dff101, dff5], ignore_index=True)
-  dff101 = pd.concat([dff101, dff6], ignore_index=True)
-  dff101 = pd.concat([dff101, dff7], ignore_index=True)
-  dff101 = pd.concat([dff101, dff8], ignore_index=True)
-
+  dff101.to_excel(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', "IIMJobsJobListing_" + str(datetime.date.today()) + ".xlsx"), index=False)
   print('THE FINAL DATA IS READY')
 
-  dff101.to_excel("IIMJobsJobListing_"+ str(datetime.date.today()) + ".xlsx", index = False)
 
 
 main()
