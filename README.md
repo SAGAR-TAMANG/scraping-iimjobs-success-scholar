@@ -62,7 +62,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Screenshot][product-screenshot]](#about-the-project)
+(#about-the-project)
 
 This project aims to scrape job listings from iimjobs.com using Selenium.
 
